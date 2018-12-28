@@ -1,0 +1,9 @@
+.programLisItemSelectContainer {
+  width: 35%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  & span {
+    width: 40%;
+  }
+}

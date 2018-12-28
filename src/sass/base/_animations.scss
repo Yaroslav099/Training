@@ -1,0 +1,27 @@
+/* Animation styles  */
+
+.deleteWordBtn {
+  position: relative;
+  opacity: 1;
+}
+
+.deleteWordBtn-active {
+  opacity: o;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.fade-exit {
+  opacity: 1;
+  transform: translateX(5rem);
+}
+.fade-exit-active {
+  opacity: 0.01;
+  transform: translateX(-1500px);
+  transition: all 500ms ease-in;
+}

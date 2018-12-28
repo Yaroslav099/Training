@@ -1,0 +1,24 @@
+@import "abstracts/functions";
+@import "abstracts/mixins";
+@import "abstracts/variables";
+
+@import "base/base";
+@import "base/typography";
+@import "base/utilities";
+@import "base/animations";
+
+@import "pages/home";
+
+@import "components/training/program";
+@import "components/training/exercises/exercise";
+@import "components/training/createProgramMenu/programList";
+@import "components/training/createProgramMenu/programListItemSelect";
+@import "components/training/usingProgram/programList";
+@import "components/training/usingProgram/specificProgram";
+@import "components/loader/loader";
+@import "components/training/usingProgram/doneReps/amountOfReps";
+@import "components/training/usingProgram/doneReps/modalAmountOfReps";
+
+
+
+      

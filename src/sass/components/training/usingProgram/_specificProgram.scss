@@ -1,0 +1,27 @@
+.specificProgram {
+ width: 95%;
+ margin: 0 auto;
+  & .specificProgram-ul {
+    width: 100%;
+    & li {
+    @include flexSpaceBetween;
+      & .specificProgram-li_dataContainer {
+        position: relative;
+        width: 65%;
+        @include flexSpaceBetween;
+      }
+      & .specificProgram-name {
+        
+      };
+      & .specificProgram-weight {
+        
+      };
+      & .specificProgram-repsToDo {
+        
+      };
+      & .specificProgram-repsDone {
+        
+      };
+    }
+  }
+}
