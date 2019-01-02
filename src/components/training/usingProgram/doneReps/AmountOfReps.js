@@ -19,7 +19,7 @@ class AmountOfReps extends Component {
       if (activeExercise === index) {
         return (
           <div className="amountOfReps" onClick={this.showHideModal}>
-            ?
+            Done!
           </div>
         );
       } else return null;

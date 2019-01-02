@@ -11,13 +11,23 @@
 
 @import "components/training/program";
 @import "components/training/exercises/exercise";
+@import "components/training/exercises/exercises";
+@import "components/training/exercises/numOfAddedExercises";
 @import "components/training/createProgramMenu/programList";
 @import "components/training/createProgramMenu/programListItemSelect";
+@import "components/training/createProgramMenu/deleteExerciseBtn";
+@import "components/training/createProgramMenu/noExercise";
 @import "components/training/usingProgram/programList";
 @import "components/training/usingProgram/specificProgram";
 @import "components/loader/loader";
 @import "components/training/usingProgram/doneReps/amountOfReps";
 @import "components/training/usingProgram/doneReps/modalAmountOfReps";
+@import "components/training/usingProgram/statistic/statistic";
+@import "components/training/usingProgram/programInfo/programInfo";
+@import "components/authentication/authForm";
+@import "components/authentication/signIn";
+@import "components/authentication/signUp";
+@import "layout/header";
 
 
 

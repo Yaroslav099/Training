@@ -1,0 +1,10 @@
+.statistic {
+  width: 90%;
+  height: 50%;
+  @include flexCenter;
+  @include absCenter;
+  color: #ffffff;
+  font-size: 20px;
+  background-color: none;
+  text-align: center;
+}

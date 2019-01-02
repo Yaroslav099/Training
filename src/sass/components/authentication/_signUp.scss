@@ -1,0 +1,9 @@
+.signUpContainer {
+  color: white;
+  width: 95%;
+  @include absCenter;
+  & button {
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}

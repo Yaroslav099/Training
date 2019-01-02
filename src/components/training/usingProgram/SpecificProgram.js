@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FbServices from '../../../firebase-services';
 import Loader from '../../loader/Loader';
 import AmountOfReps from './doneReps/AmountOfReps';
+import DoneReps from './doneReps/DoneReps';
 
 const { getSpecificProgramData } = new FbServices();
 
@@ -40,12 +41,13 @@ export default class SpecificProgram extends Component {
       return (
         <div className="specificProgram">
           <ul className="list-group specificProgram-ul">
-            {programData.map(({ exerciseName, weight, reps }, index) => (
+            {programData.map(({ exerciseName, weight, reps, repsDone }, index) => (
               <li className={this.isClassActive(index)} key={index + exerciseName + reps}>
                 <span className="specificProgram-name">{exerciseName}</span>
                 <span className="specificProgram-li_dataContainer">
                   <span className="specificProgram-weight">вага: {weight}</span>
                   <span className="specificProgram-repsToDo">рази: {reps}</span>
+                  <DoneReps doneReps={repsDone} />
                   <span className="specificProgram-repsDone">
                     <AmountOfReps
                       name={name}

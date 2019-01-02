@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ProgramsListItem from './ProgramsListItem';
 import ProgramName from './ProgramName';
+import NoExercises from './NoExercises';
 
 class ProgramsList extends Component {
   render() {
@@ -18,7 +19,8 @@ class ProgramsList extends Component {
               programData={programData}
             />
           ))}
-          <button type="button" className="btn btn-success" onClick={saveProgram}>
+          <NoExercises isExercise={programData[0]} />
+          <button type="button" className="btn btn-success saveProgramBtn" onClick={saveProgram}>
             Save
           </button>
         </ul>

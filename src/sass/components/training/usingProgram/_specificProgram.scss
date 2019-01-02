@@ -1,26 +1,28 @@
 .specificProgram {
  width: 95%;
  margin: 0 auto;
+ margin-top: 10%;
   & .specificProgram-ul {
     width: 100%;
     & li {
     @include flexSpaceBetween;
       & .specificProgram-li_dataContainer {
         position: relative;
-        width: 65%;
+        width: 75%;
         @include flexSpaceBetween;
       }
       & .specificProgram-name {
-        
       };
       & .specificProgram-weight {
-        
+        text-align: center;
       };
       & .specificProgram-repsToDo {
-        
+        text-align: center;
+        padding-left: 8px;
       };
-      & .specificProgram-repsDone {
-        
+      & .doneReps {
+        text-align: center;
+        padding-left: 8px;
       };
     }
   }

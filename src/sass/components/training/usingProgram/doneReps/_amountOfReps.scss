@@ -1,11 +1,13 @@
 .amountOfReps {
-  position: absolute;
-  top: 5%;
-  right: 5%;
+  position: fixed;
+  bottom: 10%;
+  left:50%;
+  transform: translate(-50%, -50%);
   @include flexCenter;
-  width: 25px;
-  height: 20px;
-  background-color: grey;
-  color:black;
-  border-radius: 3px;
+  width: 80px;
+  height: 80px;
+  background-color: green;
+  border-radius: 50%;
+  color:white;
+  z-index : 30032;
 };

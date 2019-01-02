@@ -10,9 +10,9 @@ class ProgramsList extends Component {
     programNames: [],
   };
 
-  openSpecificProgram = name => {
+  openProgramInfo = name => {
     const { history } = this.props;
-    history.push(`/training/${name}`);
+    history.push(`/training/program-info/${name}`);
   };
 
   componentDidMount() {
@@ -23,18 +23,24 @@ class ProgramsList extends Component {
     getProgramsNames(setNames);
   }
 
-  ProgramListWiew = programNames => (
+  ProgramListWiew = (programNames, showProgramInfo) => (
     <div className="programList">
       <ul className="list-group">
         {programNames.map((name, i) => (
-          <li
-            key={i + name}
-            index={i}
-            className="list-group-item list-group-item-success programList-item"
-            onClick={() => this.openSpecificProgram(name)}
-          >
-            {name}
-          </li>
+          <React.Fragment>
+            {name.text ? (
+              <li className="list-group-item list-group-item-success">{name.text}</li>
+            ) : (
+              <li
+                key={i + name}
+                index={i}
+                className="list-group-item list-group-item-success programList-item program"
+                onClick={() => this.openProgramInfo(name)}
+              >
+                {name}
+              </li>
+            )}
+          </React.Fragment>
         ))}
       </ul>
     </div>
@@ -42,7 +48,11 @@ class ProgramsList extends Component {
 
   render() {
     const { programNames } = this.state;
-    return programNames[0] !== undefined ? this.ProgramListWiew(programNames) : <Loader />;
+    const isNames = programNames[0] !== undefined ? true : false;
+
+    if (isNames) {
+      return this.ProgramListWiew(programNames);
+    } else return <Loader />;
   }
 }
 

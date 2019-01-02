@@ -27,12 +27,14 @@ class AmountOfRepsModal extends Component {
       showHideModal,
       programDataLength,
     } = this.props;
+
     saveDoneReps(repsDone, name, activeExercise);
     changeActiveExercise();
     showHideModal();
+
     if (programDataLength === activeExercise + 1) {
       const { history } = this.props;
-      history.push('/training/');
+      history.push(`/training/${name}/statistic/`);
     }
   };
 
@@ -40,14 +42,14 @@ class AmountOfRepsModal extends Component {
     const { repsDone } = this.state;
     return (
       <div className="amountOfRepsModal" onClick={e => this.setReps(e)}>
-        <button type="button" className="btn btn-primary btn-xsm" data-type="decrease">
+        <button type="button" className="btn btn-primary btn-lg" data-type="decrease">
           -
         </button>
         <span className="amountOfRepsModal-reps">{repsDone}</span>
-        <button type="button" className="btn btn-success btn-xsm" data-type="increase">
+        <button type="button" className="btn btn-success btn-lg" data-type="increase">
           +
         </button>
-        <button type="button" className="btn btn-warning btn-xsm" onClick={this.saveReps}>
+        <button type="button" className="btn btn-warning btn-lg" onClick={this.saveReps}>
           ok
         </button>
       </div>

@@ -1,9 +1,16 @@
 .programLisItemSelectContainer {
-  width: 35%;
+  width: 48%;
   display: flex;
-  justify-content: space-around;
+  justify-content:space-around;
   align-items: center;
-  & span {
+  & .programExerciseData {
+    display: flex;
+    flex-wrap: wrap;
     width: 40%;
+    padding-bottom: 10%;
+    & p {
+      width: 100%;
+      @include flexCenter;
+    }
   }
 }

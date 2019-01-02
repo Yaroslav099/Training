@@ -73,8 +73,12 @@ export default class Program extends Component {
   };
 
   saveDataAndClearState = (programData, programName) => {
-    saveProgram(programData, programName);
-    this.clearState();
+    if (programData && programName) {
+      saveProgram(programData, programName);
+      this.clearState();
+    } else if (programData && !programName) {
+      alert('Ви не ввели назву програми');
+    }
   };
 
   setData = (e, index, type) => {
@@ -103,12 +107,11 @@ export default class Program extends Component {
   };
 
   render() {
-    console.log(this.state);
     const { programData, programName } = this.state;
     return (
       <ProgramContext.Provider value={this.contextValue}>
         <div className="programMainContainer">
-          <Exercises />
+          <Exercises programData={programData} />
           <ProgramsList
             setData={this.setData}
             saveProgramNameToData={this.saveProgramNameToData}

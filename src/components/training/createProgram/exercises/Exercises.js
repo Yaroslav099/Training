@@ -10,12 +10,17 @@ export default class Exercises extends Component {
   ];
 
   render() {
+    const { programData } = this.props;
     return (
-      <div className="exercisesContainer">
-        {this.namesOfExercises.map((name, index) => (
-          <Exercise name={name} key={index} />
-        ))}
-      </div>
+      <React.Fragment>
+        <label for="showExercisesCheckbox" id="showExercisesLabel" />
+        <input id="showExercisesCheckbox" type="checkbox" />
+        <div className="exercisesContainer">
+          {this.namesOfExercises.map((name, index) => (
+            <Exercise name={name} key={index} programData={programData} />
+          ))}
+        </div>
+      </React.Fragment>
     );
   }
 }

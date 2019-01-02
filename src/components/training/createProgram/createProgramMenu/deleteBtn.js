@@ -6,7 +6,7 @@ const DeleteBtn = ({ index, name }) => (
     {context => (
       <button
         type="button"
-        class="btn btn-danger btn-xsm"
+        class="btn btn-danger btn-xsm deleteExerciseBtn"
         onClick={() => {
           context.deleteExercise(index, name);
         }}

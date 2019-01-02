@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { logOutUser } from '../../firebase-services';
 
-export default class Header extends Component {
-  navList = ['Home', 'Program', 'Training', 'Food'];
+class Header extends Component {
+  navList = ['Home', 'Program', 'Training', 'Food', 'logOut'];
 
   setLinks = linkName => {
     const name = linkName.toLocaleLowerCase();
     if (name === 'home') return '/';
+    if (name === 'logout') return '';
     return `/${name}/`;
+  };
+
+  logOut = e => {
+    if (e.target.innerHTML === 'logOut') {
+      const { history } = this.props;
+      logOutUser(history);
+    }
   };
 
   render() {
@@ -15,7 +24,7 @@ export default class Header extends Component {
       <ul className="nav nav-pills navigation">
         {this.navList.map(item => (
           <li className="nav-item" key={item}>
-            <Link className="nav-link" to={this.setLinks(item)}>
+            <Link className="nav-link" to={this.setLinks(item)} onClick={e => this.logOut(e)}>
               {item}
             </Link>
           </li>
@@ -24,3 +33,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default withRouter(Header);

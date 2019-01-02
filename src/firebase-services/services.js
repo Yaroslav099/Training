@@ -1,7 +1,23 @@
 import fb from '../firebase-config/config';
 
 export default class FbServices {
-  getUserName = () => 'admin';
+  setUserNameToStorage = name => localStorage.setItem('authUser', name);
+  getUserNameFromStorage = () => localStorage.getItem('authUser');
+
+  getUserName = setUserName => {
+    if (!setUserName) {
+      return this.getUserNameFromStorage();
+    } else {
+      fb.auth().onAuthStateChanged(firebaseUser => {
+        if (firebaseUser) {
+          this.setUserNameToStorage(firebaseUser.displayName);
+          setUserName(firebaseUser.displayName);
+        } else {
+          setUserName(null);
+        }
+      });
+    }
+  };
 
   fbProgramRepsRef = (userName, programName, index) => {
     return fb.database().ref(`${userName}/${programName}/${index}/repsDone`);
@@ -17,8 +33,10 @@ export default class FbServices {
 
   getProgramsNames = setNamesToState => {
     this.fbRef(this.getUserName()).on('value', snapshot => {
-      const names = Object.keys(snapshot.val());
-      setNamesToState(names);
+      if (snapshot.val()) {
+        const names = Object.keys(snapshot.val());
+        setNamesToState(names);
+      } else setNamesToState([{ text: 'У вас покищо нема програм ' }]);
     });
   };
 
@@ -30,17 +48,70 @@ export default class FbServices {
   };
 
   saveProgram = (data, programName) => {
-    if (data && programName) {
-      this.fbProgramRef(this.getUserName(), programName).set(data);
-    }
+    this.fbProgramRef(this.getUserName(), programName).set(data);
   };
 
   saveDoneReps = (reps, programName, index) => {
-    console.log(index);
     this.fbProgramRepsRef(this.getUserName(), programName, index).set(reps);
   };
 
   deleteWord = (userName, word) => {
     this.fbRef(userName, word).set(null);
   };
+
+  deleteProgram = programName => {
+    this.fbProgramRef(this.getUserName(), programName).set(null);
+  };
+
+  getStatisticOfTheTraining = (programName, setStatisticToState) => {
+    this.fbProgramRef(this.getUserName(), programName).on('value', snapshot => {
+      setStatisticToState(snapshot.val());
+    });
+  };
 }
+
+const signUpUser = (email, pass, userName, history) => {
+  const auth = fb.auth();
+
+  const promise = auth
+    .createUserWithEmailAndPassword(email, pass)
+    .then(() => {
+      const userData = fb.auth().currentUser;
+
+      userData.updateProfile({
+        displayName: userName,
+      });
+    })
+    .then(() => {
+      alert('You created a new account! Now you can log in the page with your email and password.');
+      history.push('/authentication/');
+    })
+    .catch(error => {
+      const errorMessage = error.message;
+      alert(errorMessage);
+    });
+};
+
+const signInUser = (email, pass, history, getUserName, setUserName) => {
+  const auth = fb.auth();
+  const promise = auth.signInWithEmailAndPassword(email, pass).catch(error => {
+    const errorMessage = error.message;
+    alert(errorMessage);
+  });
+
+  fb.auth().onAuthStateChanged(firebaseUser => {
+    if (firebaseUser) {
+      if (firebaseUser.displayName) {
+        history.push('/');
+      }
+    }
+  });
+};
+
+const logOutUser = history => {
+  fb.auth().signOut();
+  localStorage.clear();
+  window.location.reload();
+};
+
+export { signUpUser, signInUser, logOutUser };

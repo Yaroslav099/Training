@@ -7,10 +7,13 @@ const ProgramsLisItemSelectWiev = props => {
       <button type="button" className="btn btn-primary btn-xsm" data-type="decrease">
         -
       </button>
+      <span className="programExerciseData">
+        <p>{type}</p>
+        <p>{programData[index][type]}</p>
+      </span>
       <button type="button" className="btn btn-success btn-xsm" data-type="increase">
         +
       </button>
-      <span>{`${type} : ${programData[index][type]}`}</span>
     </div>
   );
 };
