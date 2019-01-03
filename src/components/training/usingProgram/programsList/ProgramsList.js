@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import FbServices from '../../../firebase-services';
+import FbServices from '../../../../firebase-services';
 import { withRouter } from 'react-router';
-import Loader from '../../loader';
+import Loader from '../../../loader';
 
 const { getProgramsNames } = new FbServices();
 
@@ -29,7 +29,9 @@ class ProgramsList extends Component {
         {programNames.map((name, i) => (
           <React.Fragment>
             {name.text ? (
-              <li className="list-group-item list-group-item-success">{name.text}</li>
+              <li className="list-group-item list-group-item-success" key={i}>
+                {name.text}
+              </li>
             ) : (
               <li
                 key={i + name}
@@ -49,9 +51,10 @@ class ProgramsList extends Component {
   render() {
     const { programNames } = this.state;
     const isNames = programNames[0] !== undefined ? true : false;
+    const withoutHistory = programNames.filter(el => el !== 'history');
 
     if (isNames) {
-      return this.ProgramListWiew(programNames);
+      return this.ProgramListWiew(withoutHistory);
     } else return <Loader />;
   }
 }

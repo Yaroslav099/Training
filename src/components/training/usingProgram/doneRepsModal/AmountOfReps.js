@@ -13,7 +13,14 @@ class AmountOfReps extends Component {
   };
 
   render() {
-    const { name, activeExercise, changeActiveExercise, index, programDataLength } = this.props;
+    const {
+      name,
+      activeExercise,
+      changeActiveExercise,
+      index,
+      programDataLength,
+      programData,
+    } = this.props;
     const { isModalShown } = this.state;
     if (!isModalShown) {
       if (activeExercise === index) {
@@ -31,6 +38,7 @@ class AmountOfReps extends Component {
           changeActiveExercise={changeActiveExercise}
           showHideModal={this.showHideModal}
           programDataLength={programDataLength}
+          programData={programData}
         />
       );
   }

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import FbServices from '../../../firebase-services';
-import Loader from '../../loader/Loader';
-import AmountOfReps from './doneReps/AmountOfReps';
-import DoneReps from './doneReps/DoneReps';
+import FbServices from '../../../../firebase-services';
+import Loader from '../../../loader/Loader';
+import AmountOfReps from '../doneRepsModal/AmountOfReps';
+import DoneReps from '../doneRepsModal/DoneReps';
 
 const { getSpecificProgramData } = new FbServices();
 
@@ -55,6 +55,7 @@ export default class SpecificProgram extends Component {
                       changeActiveExercise={this.changeActiveExercise}
                       index={index}
                       programDataLength={programData.length}
+                      programData={programData}
                     />
                   </span>
                 </span>

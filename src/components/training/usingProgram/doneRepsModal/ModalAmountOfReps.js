@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import FbServices from '../../../../firebase-services';
+import moment from 'moment';
 import { withRouter } from 'react-router-dom';
 
-const { saveDoneReps } = new FbServices();
+const { saveDoneReps, saveProgramDataToHistory } = new FbServices();
 
 class AmountOfRepsModal extends Component {
   state = {
@@ -33,7 +34,9 @@ class AmountOfRepsModal extends Component {
     showHideModal();
 
     if (programDataLength === activeExercise + 1) {
-      const { history } = this.props;
+      const { history, programData } = this.props;
+      const time = moment().format('LLL');
+      saveProgramDataToHistory(name, time, programData);
       history.push(`/training/${name}/statistic/`);
     }
   };

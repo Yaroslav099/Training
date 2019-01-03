@@ -1,0 +1,9 @@
+.specificDay-info {
+  @include flexSpaceAround;
+  width : 60%;
+  text-align: center;
+}
+
+.specificDay-name {
+  width: 40%;
+}

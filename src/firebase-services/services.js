@@ -1,7 +1,28 @@
 import fb from '../firebase-config/config';
 
 export default class FbServices {
+  fbProgramRepsRef = (userName, programName, index) => {
+    return fb.database().ref(`${userName}/${programName}/${index}/repsDone`);
+  };
+
+  fbProgramRef = (userName, programName) => {
+    return fb.database().ref(`${userName}/${programName}`);
+  };
+
+  fbProgramHistoryRef = (userName, programName) => {
+    return fb.database().ref(`${userName}//history/${programName}`);
+  };
+
+  fbProgramHistoryItemRef = (userName, programName, time) => {
+    return fb.database().ref(`${userName}//history/${programName}/${time}`);
+  };
+
+  fbRef = userName => {
+    return fb.database().ref(`${userName}`);
+  };
+
   setUserNameToStorage = name => localStorage.setItem('authUser', name);
+
   getUserNameFromStorage = () => localStorage.getItem('authUser');
 
   getUserName = setUserName => {
@@ -17,18 +38,6 @@ export default class FbServices {
         }
       });
     }
-  };
-
-  fbProgramRepsRef = (userName, programName, index) => {
-    return fb.database().ref(`${userName}/${programName}/${index}/repsDone`);
-  };
-
-  fbProgramRef = (userName, programName) => {
-    return fb.database().ref(`${userName}/${programName}`);
-  };
-
-  fbRef = userName => {
-    return fb.database().ref(`${userName}`);
   };
 
   getProgramsNames = setNamesToState => {
@@ -68,6 +77,19 @@ export default class FbServices {
       setStatisticToState(snapshot.val());
     });
   };
+
+  saveProgramDataToHistory = (progName, time, data) => {
+    this.fbProgramHistoryItemRef(this.getUserNameFromStorage(), progName, time).set(data);
+  };
+
+  getProgramHistory = (programName, setHistoryToState) => {
+    this.fbProgramHistoryRef(this.getUserNameFromStorage(), programName).on('value', snapshot => {
+      const val = snapshot.val();
+      if (val) {
+        setHistoryToState(val);
+      }
+    });
+  };
 }
 
 const signUpUser = (email, pass, userName, history) => {
@@ -84,7 +106,8 @@ const signUpUser = (email, pass, userName, history) => {
     })
     .then(() => {
       alert('You created a new account! Now you can log in the page with your email and password.');
-      history.push('/authentication/');
+      history.push('/');
+      window.location.reload();
     })
     .catch(error => {
       const errorMessage = error.message;

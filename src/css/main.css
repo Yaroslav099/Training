@@ -436,6 +436,40 @@ ORDER: Base + typography > general layout + grid > page layout > components
     justify-content: space-around;
     align-items: center; }
 
+.historyContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .historyContainer .historyImgContainer {
+    position: relative;
+    margin-top: 25px; }
+    .historyContainer .historyImgContainer .historyFolderImg {
+      width: 130px;
+      height: 130px; }
+    .historyContainer .historyImgContainer .historyDate {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 85%;
+      height: 90%;
+      position: absolute;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+
+.specificDay-info {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 60%;
+  text-align: center; }
+
+.specificDay-name {
+  width: 40%; }
+
 .authFormContainer {
   display: flex;
   justify-content: space-around;

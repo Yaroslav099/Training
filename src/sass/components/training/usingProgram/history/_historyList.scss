@@ -1,0 +1,22 @@
+.historyContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .historyImgContainer {
+    position: relative;
+    margin-top: 25px;
+    .historyFolderImg {
+      width: 130px;
+      height: 130px;
+    }
+    .historyDate {
+      @include flexCenter;
+      width: 85%;
+      height: 90%;
+      position: absolute;
+      @include absCenter;
+    }
+  }
+}

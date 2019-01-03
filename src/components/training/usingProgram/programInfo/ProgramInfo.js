@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FbServices from '../../../../firebase-services';
 import Loader from '../../../loader';
-import { close } from 'fs';
+import { History } from '../history';
 
 const { getSpecificProgramData, deleteProgram } = new FbServices();
 
@@ -10,6 +10,7 @@ class ProgramInfo extends Component {
     sets: '',
     exercises: '',
     doneInfo: '',
+    programHistory: false,
   };
 
   componentDidMount() {
@@ -63,12 +64,24 @@ class ProgramInfo extends Component {
     history.push(`/training/${name}`);
   };
 
+  openHistory = () => {
+    const {
+      history: {
+        location: { pathname },
+      },
+      history,
+    } = this.props;
+
+    history.push(`${pathname}/history`);
+  };
+
   deleteProgramFromTheList = name => {
     this.closeProgramInfo();
     deleteProgram(name);
   };
 
   render() {
+    console.log(this.props);
     const {
       match: {
         params: { name },
@@ -91,6 +104,7 @@ class ProgramInfo extends Component {
                 <button class="btn btn-primary" onClick={() => this.openSpecificProgram(name)}>
                   Start
                 </button>
+                <History openHistory={this.openHistory} doneInfo={doneInfo} />
                 <button class="btn btn-primary" onClick={() => this.deleteProgramFromTheList(name)}>
                   Delete
                 </button>

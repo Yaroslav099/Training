@@ -3,13 +3,14 @@ import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import withAuth from './WithAuth';
 import Header from '../header';
 import Program from '../training/createProgram';
-import ProgramList from '../training/usingProgram';
-import SpecificProgram from '../training/usingProgram/SpecificProgram';
+import ProgramList from '../training/usingProgram/programsList';
+import SpecificProgram from '../training/usingProgram/specificProgram';
 import Statistic from '../training/usingProgram/statistic/Statistic';
 import ProgramInfo from '../training/usingProgram/programInfo/ProgramInfo';
 import AuthForm from '../authentication/AuthForm';
 import SignUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
+import { HistoryList, SpecificDayHistory } from '../training/usingProgram/history';
 
 class App extends Component {
   render() {
@@ -38,7 +39,17 @@ class App extends Component {
             path="/training/:name/statistic"
             render={match => <Statistic {...match} />}
           />
-          <Route path="/training/program-info/:name" render={match => <ProgramInfo {...match} />} />
+          <Route
+            exact
+            path="/training/program-info/:name"
+            render={match => <ProgramInfo {...match} />}
+          />
+          <Route
+            exact
+            path="/training/program-info/:name/history"
+            render={match => <HistoryList {...match} />}
+          />
+          <Route path="/training/program-info/:name/history/:id" component={SpecificDayHistory} />
           <Route path="/authentication/" component={AuthForm} />
           <Route path="/signUp/" component={SignUp} />
           <Route path="/signIn/" render={() => <SignIn />} />
