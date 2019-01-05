@@ -8,6 +8,9 @@ export default class FbServices {
   fbProgramRef = (userName, programName) => {
     return fb.database().ref(`${userName}/${programName}`);
   };
+  fbProgramDataRef = (userName, programName, index, keyName) => {
+    return fb.database().ref(`${userName}/${programName}/${index}/${keyName}`);
+  };
 
   fbProgramHistoryRef = (userName, programName) => {
     return fb.database().ref(`${userName}//history/${programName}`);
@@ -19,6 +22,14 @@ export default class FbServices {
 
   fbRef = userName => {
     return fb.database().ref(`${userName}`);
+  };
+
+  fbHomePageProgramRef = programName => {
+    return fb.database().ref(`home/${programName}`);
+  };
+
+  fbHomePageRef = () => {
+    return fb.database().ref(`home`);
   };
 
   setUserNameToStorage = name => localStorage.setItem('authUser', name);
@@ -40,8 +51,8 @@ export default class FbServices {
     }
   };
 
-  getProgramsNames = setNamesToState => {
-    this.fbRef(this.getUserName()).on('value', snapshot => {
+  getProgramsNames = (ref, setNamesToState) => {
+    ref(this.getUserName()).on('value', snapshot => {
       if (snapshot.val()) {
         const names = Object.keys(snapshot.val());
         setNamesToState(names);
@@ -49,15 +60,26 @@ export default class FbServices {
     });
   };
 
-  getSpecificProgramData = (programName, setDataToState) => {
-    this.fbProgramRef(this.getUserName(), programName).on('value', snapshot => {
+  getSpecificProgramData = (ref, programName, setDataToState) => {
+    ref(this.getUserNameFromStorage(), programName).on('value', snapshot => {
+      const data = snapshot.val();
+      setDataToState(data);
+    });
+  };
+
+  getProgramDataFromHomePage = (programName, setDataToState) => {
+    this.fbHomePageProgramRef(programName).on('value', snapshot => {
       const data = snapshot.val();
       setDataToState(data);
     });
   };
 
   saveProgram = (data, programName) => {
-    this.fbProgramRef(this.getUserName(), programName).set(data);
+    this.fbProgramRef(this.getUserNameFromStorage(), programName).set(data);
+
+    data.forEach((el, index) => {
+      this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'repsDone').set(0);
+    });
   };
 
   saveDoneReps = (reps, programName, index) => {
@@ -89,6 +111,32 @@ export default class FbServices {
         setHistoryToState(val);
       }
     });
+  };
+
+  upgradeProgram = async (programName, weight, reps, programData) => {
+    const getValueFromDb = (programData, index, type) => programData[index][type];
+    programData.forEach((el, index) => {
+      if (weight !== 0) {
+        const oldWeight = getValueFromDb(programData, index, 'weight');
+        const newWeight = oldWeight + weight;
+        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'weight').set(
+          newWeight
+        );
+        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'repsDone').set(0);
+      }
+      if (+reps !== 0) {
+        const oldReps = getValueFromDb(programData, index, 'reps');
+        const newReps = oldReps + reps;
+        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'reps').set(
+          newReps
+        );
+        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'repsDone').set(0);
+      }
+    });
+  };
+
+  addProgramToHomePage = (programName, programData) => {
+    this.fbHomePageProgramRef(programName).set(programData);
   };
 }
 

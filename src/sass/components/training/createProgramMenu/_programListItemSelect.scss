@@ -14,3 +14,7 @@
     }
   }
 }
+
+.programList-item {
+  @include flexSpaceBetween;
+}

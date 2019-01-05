@@ -10,7 +10,9 @@ import ProgramInfo from '../training/usingProgram/programInfo/ProgramInfo';
 import AuthForm from '../authentication/AuthForm';
 import SignUp from '../authentication/SignUp';
 import SignIn from '../authentication/SignIn';
+import Home from '../training/home';
 import { HistoryList, SpecificDayHistory } from '../training/usingProgram/history';
+import { UpgradeMenu } from '../training/usingProgram/upgradeProgram';
 
 class App extends Component {
   render() {
@@ -21,6 +23,7 @@ class App extends Component {
           {authUser ? <Header authUser={authUser} /> : null}
           {redirect ? <Redirect to="/authentication/" /> : null}
 
+          <Route exact path="/" component={Home} />
           <Route path="/program" component={Program} />
           <Route exact path="/training" component={ProgramList} />
           <Route
@@ -46,9 +49,15 @@ class App extends Component {
           />
           <Route
             exact
+            path="/training/program-info/:name/upgrade"
+            render={match => <UpgradeMenu {...match} />}
+          />
+          <Route
+            exact
             path="/training/program-info/:name/history"
             render={match => <HistoryList {...match} />}
           />
+
           <Route path="/training/program-info/:name/history/:id" component={SpecificDayHistory} />
           <Route path="/authentication/" component={AuthForm} />
           <Route path="/signUp/" component={SignUp} />

@@ -17,7 +17,7 @@ class Statistic extends Component {
       return acc + val['repsDone'];
     }, 0);
 
-    const result = ((doneReps * 100) / defaultProgramReps).toFixed(1);
+    const result = ((doneReps * 100) / defaultProgramReps).toFixed(0);
 
     this.setState({
       statistic: result,

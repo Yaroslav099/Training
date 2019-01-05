@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import FbServices from '../../../../firebase-services';
 import Loader from '../../../loader';
 import { History } from '../history';
+import { UpgradeBtn } from '../upgradeProgram';
 
-const { getSpecificProgramData, deleteProgram } = new FbServices();
+const { getSpecificProgramData, deleteProgram, fbProgramRef } = new FbServices();
 
 class ProgramInfo extends Component {
   state = {
@@ -20,7 +21,7 @@ class ProgramInfo extends Component {
       },
     } = this.props;
 
-    getSpecificProgramData(name, programData => {
+    getSpecificProgramData(fbProgramRef, name, programData => {
       if (programData) {
         const exercisesNames = programData;
         const sets = programData.length;
@@ -42,16 +43,14 @@ class ProgramInfo extends Component {
   };
 
   getDonePersentage = programData => {
-    if (programData[programData.length - 1].repsDone) {
-      const defaultProgramReps = programData.reduce((acc, val) => {
-        return acc + val['reps'];
-      }, 0);
-      const doneReps = programData.reduce((acc, val) => {
-        return acc + val['repsDone'];
-      }, 0);
+    const defaultProgramReps = programData.reduce((acc, val) => {
+      return acc + val['reps'];
+    }, 0);
+    const doneReps = programData.reduce((acc, val) => {
+      return acc + val['repsDone'];
+    }, 0);
 
-      return ((doneReps * 100) / defaultProgramReps).toFixed(1);
-    } else return 0;
+    return ((doneReps * 100) / defaultProgramReps).toFixed(0);
   };
 
   closeProgramInfo = () => {
@@ -104,6 +103,7 @@ class ProgramInfo extends Component {
                 <button class="btn btn-primary" onClick={() => this.openSpecificProgram(name)}>
                   Start
                 </button>
+                <UpgradeBtn doneInfo={doneInfo} />
                 <History openHistory={this.openHistory} doneInfo={doneInfo} />
                 <button class="btn btn-primary" onClick={() => this.deleteProgramFromTheList(name)}>
                   Delete

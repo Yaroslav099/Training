@@ -4,7 +4,7 @@ import Loader from '../../../loader/Loader';
 import AmountOfReps from '../doneRepsModal/AmountOfReps';
 import DoneReps from '../doneRepsModal/DoneReps';
 
-const { getSpecificProgramData } = new FbServices();
+const { fbProgramRef, getSpecificProgramData } = new FbServices();
 
 export default class SpecificProgram extends Component {
   state = {
@@ -31,7 +31,7 @@ export default class SpecificProgram extends Component {
     const setDataToState = data => {
       this.setState({ programData: data });
     };
-    getSpecificProgramData(name, setDataToState);
+    getSpecificProgramData(fbProgramRef, name, setDataToState);
   }
 
   render() {

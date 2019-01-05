@@ -192,6 +192,11 @@ ORDER: Base + typography > general layout + grid > page layout > components
       justify-content: center;
       align-items: center; }
 
+.programList-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
 .deleteExerciseBtn {
   margin: 0 auto; }
 
@@ -220,8 +225,10 @@ ORDER: Base + typography > general layout + grid > page layout > components
   margin: 0 auto;
   margin-top: 10%; }
   .specificProgram .specificProgram-ul {
-    width: 100%; }
+    width: 100%;
+    min-width: 250px; }
     .specificProgram .specificProgram-ul li {
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center; }
@@ -231,6 +238,8 @@ ORDER: Base + typography > general layout + grid > page layout > components
         display: flex;
         justify-content: space-between;
         align-items: center; }
+      .specificProgram .specificProgram-ul li .specificProgram-name {
+        width: 30%; }
       .specificProgram .specificProgram-ul li .specificProgram-weight {
         text-align: center; }
       .specificProgram .specificProgram-ul li .specificProgram-repsToDo {
@@ -466,6 +475,8 @@ ORDER: Base + typography > general layout + grid > page layout > components
   align-items: center;
   width: 60%;
   text-align: center; }
+  .specificDay-info span {
+    margin-left: 10px; }
 
 .specificDay-name {
   width: 40%; }

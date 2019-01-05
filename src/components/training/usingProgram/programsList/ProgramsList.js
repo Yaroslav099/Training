@@ -2,51 +2,37 @@ import React, { Component } from 'react';
 import FbServices from '../../../../firebase-services';
 import { withRouter } from 'react-router';
 import Loader from '../../../loader';
+import ShareProgramBtn from './ShareProgramBtn';
+import ProgramListWiew from './ProgramListWiev';
 
-const { getProgramsNames } = new FbServices();
+const { fbRef, getProgramsNames } = new FbServices();
 
 class ProgramsList extends Component {
   state = {
     programNames: [],
   };
 
-  openProgramInfo = name => {
-    const { history } = this.props;
-    history.push(`/training/program-info/${name}`);
+  openProgramInfo = (e, name) => {
+    if (e.target.type !== 'submit') {
+      const { history } = this.props;
+      history.push(`/training/program-info/${name}`);
+    }
   };
+
+  renderFunc = name => (
+    <React.Fragment>
+      {name}
+      <ShareProgramBtn name={name} />
+    </React.Fragment>
+  );
 
   componentDidMount() {
     const setNames = programNames => {
       this.setState({ programNames });
     };
 
-    getProgramsNames(setNames);
+    getProgramsNames(fbRef, setNames);
   }
-
-  ProgramListWiew = (programNames, showProgramInfo) => (
-    <div className="programList">
-      <ul className="list-group">
-        {programNames.map((name, i) => (
-          <React.Fragment>
-            {name.text ? (
-              <li className="list-group-item list-group-item-success" key={i}>
-                {name.text}
-              </li>
-            ) : (
-              <li
-                key={i + name}
-                index={i}
-                className="list-group-item list-group-item-success programList-item program"
-                onClick={() => this.openProgramInfo(name)}
-              >
-                {name}
-              </li>
-            )}
-          </React.Fragment>
-        ))}
-      </ul>
-    </div>
-  );
 
   render() {
     const { programNames } = this.state;
@@ -54,7 +40,13 @@ class ProgramsList extends Component {
     const withoutHistory = programNames.filter(el => el !== 'history');
 
     if (isNames) {
-      return this.ProgramListWiew(withoutHistory);
+      return (
+        <ProgramListWiew
+          programNames={withoutHistory}
+          openProgramInfo={this.openProgramInfo}
+          renderFunc={this.renderFunc}
+        />
+      );
     } else return <Loader />;
   }
 }

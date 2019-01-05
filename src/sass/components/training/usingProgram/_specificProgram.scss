@@ -4,7 +4,9 @@
  margin-top: 10%;
   & .specificProgram-ul {
     width: 100%;
+    min-width: 250px;
     & li {
+    font-size: 14px;
     @include flexSpaceBetween;
       & .specificProgram-li_dataContainer {
         position: relative;
@@ -12,6 +14,7 @@
         @include flexSpaceBetween;
       }
       & .specificProgram-name {
+        width: 30%;
       };
       & .specificProgram-weight {
         text-align: center;
