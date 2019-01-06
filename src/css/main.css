@@ -82,8 +82,8 @@ ORDER: Base + typography > general layout + grid > page layout > components
   margin-bottom: 0; }
 
 .exercisesContainer {
-  display: block;
-  transition: all 0.8s ease-out;
+  display: none;
+  transition: transform, opacity, visibility, background-color 0.8s ease-out;
   opacity: 0;
   overflow: auto;
   visibility: hidden;
@@ -98,6 +98,7 @@ ORDER: Base + typography > general layout + grid > page layout > components
 #showExercisesCheckbox {
   display: none; }
   #showExercisesCheckbox:checked + .exercisesContainer {
+    display: block;
     transform: translateX(0);
     opacity: 1;
     visibility: visible;
@@ -225,30 +226,40 @@ ORDER: Base + typography > general layout + grid > page layout > components
   width: 95%;
   margin: 0 auto;
   margin-top: 10%; }
+  .specificProgram .specificProgram-info {
+    color: white;
+    text-align: center;
+    margin-bottom: 40px; }
   .specificProgram .specificProgram-ul {
     width: 100%;
     min-width: 250px; }
     .specificProgram .specificProgram-ul li {
+      display: flex;
       font-size: 14px;
       display: flex;
       justify-content: space-between;
       align-items: center; }
       .specificProgram .specificProgram-ul li .specificProgram-li_dataContainer {
         position: relative;
-        width: 75%;
+        min-width: 150px;
         display: flex;
         justify-content: space-between;
-        align-items: center; }
+        align-items: center;
+        padding-left: 20px; }
       .specificProgram .specificProgram-ul li .specificProgram-name {
-        width: 30%; }
+        min-width: 80px;
+        min-height: 42px; }
       .specificProgram .specificProgram-ul li .specificProgram-weight {
-        text-align: center; }
+        text-align: center;
+        min-height: 42px; }
       .specificProgram .specificProgram-ul li .specificProgram-repsToDo {
         text-align: center;
-        padding-left: 8px; }
+        padding-left: 8px;
+        min-height: 42px; }
       .specificProgram .specificProgram-ul li .doneReps {
         text-align: center;
-        padding-left: 8px; }
+        padding-left: 8px;
+        min-height: 42px; }
 
 .lds-css.ng-scope {
   display: flex;
@@ -410,6 +421,19 @@ ORDER: Base + typography > general layout + grid > page layout > components
   font-size: 20px;
   background-color: none;
   text-align: center; }
+
+.upgradeInput {
+  width: 30px;
+  border: none;
+  outline: none;
+  padding-left: 8%; }
+
+.saveUpgradeBtn {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 3000000; }
 
 .programInfoContainer {
   position: absolute;

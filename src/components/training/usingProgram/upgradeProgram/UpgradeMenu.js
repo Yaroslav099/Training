@@ -1,39 +1,14 @@
 import React, { Component } from 'react';
-import ProgramListItemSelectWiev from '../../createProgram/createProgramMenu/ProgramsListItemSelectWiev';
 import { withRouter } from 'react-router-dom';
 import FbServices from '../../../../firebase-services';
-
+import Loader from '../../../loader';
+import UpgradeInput from './UpgradeInput';
 const { upgradeProgram, getSpecificProgramData, fbProgramRef } = new FbServices();
 
 class UpgradeMenu extends Component {
   state = {
     newData: [{ weight: 0, reps: 0 }],
     programData: [],
-  };
-
-  setSelectData = (index, data, type) => {
-    const { newData: stateData } = this.state;
-    const oldExerciseData = stateData[index];
-    oldExerciseData[type] = data;
-    stateData[index] = oldExerciseData;
-
-    const newData = stateData;
-    this.setState({
-      newData,
-    });
-  };
-
-  setData = (e, index, type) => {
-    const eltype = e.target.type;
-    if (eltype === 'button') {
-      let { newData: dataFromState } = this.state;
-      const typeBtn = e.target.dataset.type;
-
-      const data =
-        typeBtn === 'decrease' ? --dataFromState[index][type] : ++dataFromState[index][type];
-
-      this.setSelectData(index, data, type);
-    }
   };
 
   onSave = () => {
@@ -48,8 +23,16 @@ class UpgradeMenu extends Component {
     } = this.props;
     const newPath = pathname.slice(0, -9);
 
-    upgradeProgram(name, weight, reps, programData);
+    upgradeProgram(programData, name);
     history.push(newPath);
+  };
+
+  upgradeSomeValueInData = (e, index, type) => {
+    const { programData } = this.state;
+    let value = e.target.value;
+    programData[index][type] = value;
+
+    this.setState({ programData });
   };
 
   componentDidMount() {
@@ -65,32 +48,49 @@ class UpgradeMenu extends Component {
   }
 
   render() {
-    const { newData } = this.state;
-    return (
-      <div className="programInfoContainer">
-        <div class="card programInfo">
-          <div class="card-body">
-            <div className="programInfo-btnContainer">
-              <ProgramListItemSelectWiev
-                type="weight"
-                setData={this.setData}
-                index={0}
-                programData={newData}
-              />
-              <ProgramListItemSelectWiev
-                type="reps"
-                setData={this.setData}
-                index={0}
-                programData={newData}
-              />
-              <button class="btn btn-success" onClick={this.onSave}>
-                Save
-              </button>
-            </div>
-          </div>
+    const { programData } = this.state;
+    console.log(programData);
+    if (programData[0] !== undefined) {
+      return (
+        <div className="specificProgram">
+          <h4 className="specificProgram-info">
+            Для того щоб змінити вагу або повтори нажміть на цифру
+          </h4>
+          <ul className="list-group specificProgram-ul">
+            {programData.map(({ exerciseName, reps }, index) => (
+              <li className="list-group-item list-group-item" key={index + exerciseName}>
+                <span className="specificProgram-name">{exerciseName}</span>
+                <span className="specificProgram-li_dataContainer">
+                  <span className="specificProgram-weight">
+                    вага:{' '}
+                    <UpgradeInput
+                      value={this.state.programData[index]['weight']}
+                      type="weight"
+                      index={index}
+                      upgradeSomeValueInData={this.upgradeSomeValueInData}
+                    />
+                  </span>
+                  <span className="specificProgram-repsToDo">
+                    рази:{' '}
+                    <UpgradeInput
+                      value={this.state.programData[index]['reps']}
+                      type="reps"
+                      index={index}
+                      upgradeSomeValueInData={this.upgradeSomeValueInData}
+                    />
+                  </span>
+                </span>
+              </li>
+            ))}
+            ;
+          </ul>
+
+          <button class="btn btn-success saveUpgradeBtn" onClick={this.onSave}>
+            Save
+          </button>
         </div>
-      </div>
-    );
+      );
+    } else return <Loader />;
   }
 }
 

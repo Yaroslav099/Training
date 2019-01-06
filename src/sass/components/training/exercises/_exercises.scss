@@ -1,6 +1,6 @@
 .exercisesContainer {
-  display: block;
-  transition: all 0.8s ease-out;
+  display: none;
+  transition: transform, opacity, visibility, background-color 0.8s ease-out;
   opacity: 0;
   overflow: auto;
   visibility: hidden;
@@ -16,6 +16,7 @@
 #showExercisesCheckbox {
   display : none;
   &:checked + .exercisesContainer {
+    display: block;
     transform: translateX(0);
     opacity: 1;
     visibility: visible;

@@ -120,30 +120,8 @@ export default class FbServices {
     });
   };
 
-  upgradeProgram = async (programName, weight, reps, programData) => {
-    const getValueFromDb = (programData, index, type) => programData[index][type];
-    programData.forEach((el, index) => {
-      if (weight !== 0) {
-        const oldWeight = getValueFromDb(programData, index, 'weight');
-        let newWeight = oldWeight + weight;
-        const newWeightCantBeLower0 = newWeight < 0 ? 0 : newWeight;
-        newWeight = newWeightCantBeLower0;
-        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'weight').set(
-          newWeight
-        );
-        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'repsDone').set(0);
-      }
-      if (+reps !== 0) {
-        const oldReps = getValueFromDb(programData, index, 'reps');
-        let newReps = oldReps + reps;
-        const newRepsCantBeLower0 = newReps < 0 ? 0 : newReps;
-        newReps = newRepsCantBeLower0;
-        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'reps').set(
-          newReps
-        );
-        this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'repsDone').set(0);
-      }
-    });
+  upgradeProgram = (programData, progName) => {
+    this.fbProgramRef(this.getUserNameFromStorage(), progName).set(programData);
   };
 
   addProgramToHomePage = (programName, programData) => {
