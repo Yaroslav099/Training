@@ -9,7 +9,7 @@ const { fbRef, getProgramsNames } = new FbServices();
 
 class ProgramsList extends Component {
   state = {
-    programNames: [],
+    programNames: null,
   };
 
   openProgramInfo = (e, name) => {
@@ -28,7 +28,9 @@ class ProgramsList extends Component {
 
   componentDidMount() {
     const setNames = programNames => {
-      this.setState({ programNames });
+      if (programNames.length !== 0) {
+        this.setState({ programNames });
+      }
     };
 
     getProgramsNames(fbRef, setNames);
@@ -36,10 +38,9 @@ class ProgramsList extends Component {
 
   render() {
     const { programNames } = this.state;
-    const isNames = programNames[0] !== undefined ? true : false;
-    const withoutHistory = programNames.filter(el => el !== 'history');
-
+    const isNames = programNames ? true : false;
     if (isNames) {
+      const withoutHistory = programNames.filter(el => el !== 'history');
       return (
         <ProgramListWiew
           programNames={withoutHistory}

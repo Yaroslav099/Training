@@ -6,7 +6,12 @@ const { addProgramToHomePage, getSpecificProgramData, fbProgramRef } = new FbSer
 const ShareProgramBtn = ({ name }) => {
   const shareProgramToHomePage = () => {
     getSpecificProgramData(fbProgramRef, name, data => {
-      addProgramToHomePage(name, data);
+      const dataWithKeys = data.map(el => {
+        el.key = el.exerciseName;
+        return el;
+      });
+      console.log(dataWithKeys);
+      addProgramToHomePage(name, dataWithKeys);
     });
   };
 

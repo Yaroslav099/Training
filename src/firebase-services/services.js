@@ -6,7 +6,10 @@ export default class FbServices {
   };
 
   fbProgramRef = (userName, programName) => {
-    return fb.database().ref(`${userName}/${programName}`);
+    return fb
+      .database()
+      .ref(`${userName}`)
+      .child(programName);
   };
   fbProgramDataRef = (userName, programName, index, keyName) => {
     return fb.database().ref(`${userName}/${programName}/${index}/${keyName}`);
@@ -91,7 +94,11 @@ export default class FbServices {
   };
 
   deleteProgram = programName => {
-    this.fbProgramRef(this.getUserName(), programName).set(null);
+    this.fbProgramRef(this.getUserName(), programName).remove();
+  };
+
+  deleteProgramFromHistory = programName => {
+    this.fbProgramHistoryRef(this.getUserNameFromStorage(), programName).set(null);
   };
 
   getStatisticOfTheTraining = (programName, setStatisticToState) => {
@@ -118,7 +125,9 @@ export default class FbServices {
     programData.forEach((el, index) => {
       if (weight !== 0) {
         const oldWeight = getValueFromDb(programData, index, 'weight');
-        const newWeight = oldWeight + weight;
+        let newWeight = oldWeight + weight;
+        const newWeightCantBeLower0 = newWeight < 0 ? 0 : newWeight;
+        newWeight = newWeightCantBeLower0;
         this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'weight').set(
           newWeight
         );
@@ -126,7 +135,9 @@ export default class FbServices {
       }
       if (+reps !== 0) {
         const oldReps = getValueFromDb(programData, index, 'reps');
-        const newReps = oldReps + reps;
+        let newReps = oldReps + reps;
+        const newRepsCantBeLower0 = newReps < 0 ? 0 : newReps;
+        newReps = newRepsCantBeLower0;
         this.fbProgramDataRef(this.getUserNameFromStorage(), programName, index, 'reps').set(
           newReps
         );

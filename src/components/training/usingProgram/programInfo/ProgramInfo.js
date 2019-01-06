@@ -4,7 +4,12 @@ import Loader from '../../../loader';
 import { History } from '../history';
 import { UpgradeBtn } from '../upgradeProgram';
 
-const { getSpecificProgramData, deleteProgram, fbProgramRef } = new FbServices();
+const {
+  getSpecificProgramData,
+  deleteProgram,
+  fbProgramRef,
+  deleteProgramFromHistory,
+} = new FbServices();
 
 class ProgramInfo extends Component {
   state = {
@@ -77,6 +82,7 @@ class ProgramInfo extends Component {
   deleteProgramFromTheList = name => {
     this.closeProgramInfo();
     deleteProgram(name);
+    deleteProgramFromHistory(name);
   };
 
   render() {

@@ -32,7 +32,7 @@ class AmountOfRepsModal extends Component {
     saveDoneReps(repsDone, name, activeExercise);
     changeActiveExercise();
     showHideModal();
-
+    console.log(this.state);
     if (programDataLength === activeExercise + 1) {
       const { history, programData } = this.props;
       const time = moment().format('LLL');

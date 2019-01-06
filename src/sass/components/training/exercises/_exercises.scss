@@ -2,8 +2,9 @@
   display: block;
   transition: all 0.8s ease-out;
   opacity: 0;
+  overflow: auto;
   visibility: hidden;
-  position: fixed;
+  position: absolute;
   top: 0;
   left:0;
   min-height: 100vh;
