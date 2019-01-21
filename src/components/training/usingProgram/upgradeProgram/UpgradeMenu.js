@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import FbServices from '../../../../firebase-services';
-import Loader from '../../../loader';
+import FbServices, { FbRefs } from '../../../../firebase-services';
+import { isLoggedIn } from '../../../hoc-helpers';
 import UpgradeInput from './UpgradeInput';
-const { upgradeProgram, getSpecificProgramData, fbProgramRef } = new FbServices();
+import UpgradeMenuWiew from './UpgradeMenuWiew';
+import PageNotFound from '../../../routeErr/PageNotFound';
+const { fbProgramRef } = new FbRefs();
+const { upgradeProgram, getSpecificProgramData } = new FbServices();
 
 class UpgradeMenu extends Component {
   state = {
@@ -23,8 +26,9 @@ class UpgradeMenu extends Component {
     } = this.props;
     const newPath = pathname.slice(0, -9);
 
-    upgradeProgram(programData, name);
-    history.push(newPath);
+    upgradeProgram(programData, name, () => {
+      history.push(newPath);
+    });
   };
 
   upgradeSomeValueInData = (e, index, type) => {
@@ -35,9 +39,20 @@ class UpgradeMenu extends Component {
     this.setState({ programData });
   };
 
+  renderFunc = (index, type) => (
+    <span className="specificProgram-weight">
+      {type}:{' '}
+      <UpgradeInput
+        value={this.state.programData[index][type]}
+        type={type}
+        index={index}
+        upgradeSomeValueInData={this.upgradeSomeValueInData}
+      />
+    </span>
+  );
+
   componentDidMount() {
     const {
-      history,
       match: {
         params: { name },
       },
@@ -49,49 +64,15 @@ class UpgradeMenu extends Component {
 
   render() {
     const { programData } = this.state;
-    console.log(programData);
-    if (programData[0] !== undefined) {
-      return (
-        <div className="specificProgram">
-          <h4 className="specificProgram-info">
-            Для того щоб змінити вагу або повтори нажміть на цифру
-          </h4>
-          <ul className="list-group specificProgram-ul">
-            {programData.map(({ exerciseName, reps }, index) => (
-              <li className="list-group-item list-group-item" key={index + exerciseName}>
-                <span className="specificProgram-name">{exerciseName}</span>
-                <span className="specificProgram-li_dataContainer">
-                  <span className="specificProgram-weight">
-                    вага:{' '}
-                    <UpgradeInput
-                      value={this.state.programData[index]['weight']}
-                      type="weight"
-                      index={index}
-                      upgradeSomeValueInData={this.upgradeSomeValueInData}
-                    />
-                  </span>
-                  <span className="specificProgram-repsToDo">
-                    рази:{' '}
-                    <UpgradeInput
-                      value={this.state.programData[index]['reps']}
-                      type="reps"
-                      index={index}
-                      upgradeSomeValueInData={this.upgradeSomeValueInData}
-                    />
-                  </span>
-                </span>
-              </li>
-            ))}
-            ;
-          </ul>
-
-          <button class="btn btn-success saveUpgradeBtn" onClick={this.onSave}>
-            Save
-          </button>
-        </div>
-      );
-    } else return <Loader />;
+    if (programData === null) return <PageNotFound />;
+    return (
+      <UpgradeMenuWiew
+        renderFunc={this.renderFunc}
+        programData={programData}
+        onSave={this.onSave}
+      />
+    );
   }
 }
 
-export default withRouter(UpgradeMenu);
+export default withRouter(isLoggedIn(UpgradeMenu));

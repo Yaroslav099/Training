@@ -1,6 +1,18 @@
 .signInContainer {
   color: white;
-  width: 95%;
+  width: 50%;
+  max-width: 800px;
+  @include respond(tab-land) {
+    width: 600px;
+  }
+  @include respond(tab-port) {
+    width: 93%;
+    max-width: 600px;
+  }
+  @include respond(phone) {
+    width: 95%;
+  }
+
   @include absCenter;
   & button {
     margin-left: 50%;

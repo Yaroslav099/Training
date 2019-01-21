@@ -20,7 +20,9 @@ class AmountOfReps extends Component {
       index,
       programDataLength,
       programData,
+      saveDoneRepsToState,
     } = this.props;
+
     const { isModalShown } = this.state;
     if (!isModalShown) {
       if (activeExercise === index) {
@@ -32,14 +34,17 @@ class AmountOfReps extends Component {
       } else return null;
     } else
       return (
-        <ModalAmountOfReps
-          name={name}
-          activeExercise={activeExercise}
-          changeActiveExercise={changeActiveExercise}
-          showHideModal={this.showHideModal}
-          programDataLength={programDataLength}
-          programData={programData}
-        />
+        <span className="specificProgram-repsDone">
+          <ModalAmountOfReps
+            name={name}
+            activeExercise={activeExercise}
+            changeActiveExercise={changeActiveExercise}
+            showHideModal={this.showHideModal}
+            programDataLength={programDataLength}
+            programData={programData}
+            saveDoneRepsToState={saveDoneRepsToState}
+          />
+        </span>
       );
   }
 }

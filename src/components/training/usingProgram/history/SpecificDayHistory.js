@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import FbServices from '../../../../firebase-services';
+import { HistoryServices } from '../../../../firebase-services';
+import { isLoggedIn } from '../../../hoc-helpers';
 import Loader from '../../../loader';
-import folderImg from '../../../../images/folder.png';
-import { withRouter } from 'react-router-dom';
+import PageNotFound from '../../../routeErr/PageNotFound';
 
-const { getProgramHistory } = new FbServices();
+const { getProgramHistory } = new HistoryServices();
 
 class SpecificDayHistory extends Component {
   state = {
@@ -18,7 +18,6 @@ class SpecificDayHistory extends Component {
       },
     } = this.props;
     const historyByDate = Object.values(history)[id];
-    console.log(this.props);
     this.setState({ history: historyByDate });
   };
 
@@ -41,6 +40,7 @@ class SpecificDayHistory extends Component {
 
   render() {
     const { history } = this.state;
+    if (history === null) return <PageNotFound />;
     if (history) {
       return (
         <div className="specificProgram">
@@ -61,4 +61,4 @@ class SpecificDayHistory extends Component {
   }
 }
 
-export default SpecificDayHistory;
+export default isLoggedIn(SpecificDayHistory);

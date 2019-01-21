@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Exercises from './exercises/Exercises';
-import ProgramsList from './createProgramMenu/ProgramsList';
-import FbServices from '../../../firebase-services';
+import Exercises from '../exercises/Exercises';
+import ProgramsList from '../createProgramMenu/ProgramsList';
+import FbServices from '../../../../firebase-services';
 
 const { saveProgram } = new FbServices();
 

@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const DeleteProgramBtn = () => {
-  const deleteProgram = () => {};
-
+const DeleteProgramBtn = ({ programName, deleteProgramFromHomePage }) => {
   return (
-    <button class="btn btn-dunger" onClick={deleteProgram}>
+    <button className="btn btn-danger" onClick={() => deleteProgramFromHomePage(programName)}>
       Delete
     </button>
   );

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import FbServices from '../../../../firebase-services';
-import Loader from '../../../loader';
-import folderImg from '../../../../images/folder.png';
+import { HistoryServices } from '../../../../firebase-services';
 import { withRouter } from 'react-router-dom';
+import { isLoggedIn } from '../../../hoc-helpers';
+import Loader from '../../../loader';
+import PageNoteFound from '../../../routeErr/PageNotFound';
+import folderImg from '../../../../images/folder.png';
 
-const { getProgramHistory } = new FbServices();
+const { getProgramHistory } = new HistoryServices();
 
 class HistoryList extends Component {
   state = {
@@ -35,6 +37,7 @@ class HistoryList extends Component {
 
   render() {
     const { history } = this.state;
+    if (history === null) return <PageNoteFound />;
     if (history[0] !== undefined) {
       return (
         <div className="historyContainer">
@@ -54,4 +57,4 @@ class HistoryList extends Component {
   }
 }
 
-export default withRouter(HistoryList);
+export default withRouter(isLoggedIn(HistoryList));

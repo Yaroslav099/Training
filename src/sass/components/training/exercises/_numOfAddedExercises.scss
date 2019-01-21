@@ -1,7 +1,7 @@
 .exercises-numOfExercise {
   position : absolute;
   top: 50%;
-  right: -5%;
+  right: 0%;
   transform: translate(-50%, -50%);
   width: 30px;
   height: 30px;
@@ -9,4 +9,7 @@
   margin: 0;
   text-align: center;
   border-radius: 50%;
+  @include respond(phone) {
+    right: -2%;
+  }
 }

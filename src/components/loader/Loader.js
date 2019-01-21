@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Loader = ({ loading }) => {
+const Loader = () => {
   return (
-    <div class="lds-css ng-scope">
-      <div class="lds-spinner">
+    <div className="lds-css ng-scope">
+      <div className="lds-spinner">
         <div />
         <div />
         <div />

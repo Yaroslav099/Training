@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import FbServices from '../../../../firebase-services';
+import FbServices, { FbRefs } from '../../../../firebase-services';
 import { withRouter } from 'react-router';
 import Loader from '../../../loader';
 import ShareProgramBtn from './ShareProgramBtn';
 import ProgramListWiew from './ProgramListWiev';
+import { isLoggedIn } from '../../../hoc-helpers';
 
-const { fbRef, getProgramsNames } = new FbServices();
+const { fbRef } = new FbRefs();
+const { getProgramsNames } = new FbServices();
 
 class ProgramsList extends Component {
   state = {
@@ -39,6 +41,7 @@ class ProgramsList extends Component {
   render() {
     const { programNames } = this.state;
     const isNames = programNames ? true : false;
+
     if (isNames) {
       const withoutHistory = programNames.filter(el => el !== 'history');
       return (
@@ -52,4 +55,4 @@ class ProgramsList extends Component {
   }
 }
 
-export default withRouter(ProgramsList);
+export default withRouter(isLoggedIn(ProgramsList));

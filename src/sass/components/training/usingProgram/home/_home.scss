@@ -1,0 +1,7 @@
+.homeBtnsContainer{
+  widtH : 200px;
+  @include flexSpaceAround;
+  @include respond(phone){
+   width: 50%;
+  }
+}

@@ -1,20 +1,26 @@
 .cardContainer {
-  @include respond(phone) {
     position: relative;
     transform: translateX(-100%);
     transition: all 1s ease-out;
     opacity: 0;
-    width: 95%;
+    width: 30%;
     height: 5%;
-    margin: 2%;
+    margin: 1.6%;
     padding-left: 10px;
     cursor: pointer;
     background-color: rgb(58, 58, 202);
     color: white;
-  }
+    @include respond(tab-port){
+      width: 45%;
+      margin: 2%;
+    }
+    @include respond(phone){
+      width: 95%;
+    }
   &:hover { background-color: rgb(8, 8, 107)}
   .exercises-name {
     height: 30px;
+    max-width: 90%;
     margin-bottom: 0;
   }
 }

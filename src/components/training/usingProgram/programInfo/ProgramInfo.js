@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import FbServices from '../../../../firebase-services';
-import Loader from '../../../loader';
+import FbServices, { FbRefs, HistoryServices } from '../../../../firebase-services';
 import { History } from '../history';
 import { UpgradeBtn } from '../upgradeProgram';
+import { isLoggedIn } from '../../../hoc-helpers';
+import Loader from '../../../loader';
 
-const {
-  getSpecificProgramData,
-  deleteProgram,
-  fbProgramRef,
-  deleteProgramFromHistory,
-} = new FbServices();
+const { fbProgramRef } = new FbRefs();
+
+const { getSpecificProgramData, deleteProgram } = new FbServices();
+const { deleteProgramFromHistory } = new HistoryServices();
 
 class ProgramInfo extends Component {
   state = {
@@ -19,12 +18,15 @@ class ProgramInfo extends Component {
     programHistory: false,
   };
 
+  _isMounted = false;
+
   componentDidMount() {
     const {
       match: {
         params: { name },
       },
     } = this.props;
+    this._isMounted = true;
 
     getSpecificProgramData(fbProgramRef, name, programData => {
       if (programData) {
@@ -32,9 +34,15 @@ class ProgramInfo extends Component {
         const sets = programData.length;
         const exercises = this.getAmountOfExercises(programData);
         const doneInfo = this.getDonePersentage(programData);
-        this.setState({ sets, exercises, doneInfo });
+        if (this._isMounted) {
+          this.setState({ sets, exercises, doneInfo });
+        }
       }
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   getAmountOfExercises = dataArr => {
@@ -49,10 +57,10 @@ class ProgramInfo extends Component {
 
   getDonePersentage = programData => {
     const defaultProgramReps = programData.reduce((acc, val) => {
-      return acc + val['reps'];
+      return +acc + +val['reps'];
     }, 0);
     const doneReps = programData.reduce((acc, val) => {
-      return acc + val['repsDone'];
+      return +acc + +val['repsDone'];
     }, 0);
 
     return ((doneReps * 100) / defaultProgramReps).toFixed(0);
@@ -80,13 +88,12 @@ class ProgramInfo extends Component {
   };
 
   deleteProgramFromTheList = name => {
-    this.closeProgramInfo();
     deleteProgram(name);
     deleteProgramFromHistory(name);
+    this.closeProgramInfo();
   };
 
   render() {
-    console.log(this.props);
     const {
       match: {
         params: { name },
@@ -96,22 +103,25 @@ class ProgramInfo extends Component {
     if (doneInfo || doneInfo === 0) {
       return (
         <div className="programInfoContainer">
-          <div class="card programInfo">
-            <div class="card-body">
-              <h5 class="card-title">{name}</h5>
+          <div className="card programInfo">
+            <div className="card-body">
+              <h5 className="card-title">{name}</h5>
               <h5 className="closeProgramInfoBtn" onClick={this.closeProgramInfo}>
                 Close
               </h5>
-              <p class="card-text1">Вправи - {exercises}</p>
-              <p class="card-text2">підходів - {sets}</p>
-              <p class="card-text3">Програму зроблено на {doneInfo} %</p>
+              <p className="card-text1">Вправи - {exercises}</p>
+              <p className="card-text2">підходів - {sets}</p>
+              <p className="card-text3">Програму зроблено на {doneInfo} %</p>
               <div className="programInfo-btnContainer">
-                <button class="btn btn-primary" onClick={() => this.openSpecificProgram(name)}>
+                <button className="btn btn-primary" onClick={() => this.openSpecificProgram(name)}>
                   Start
                 </button>
                 <UpgradeBtn doneInfo={doneInfo} />
                 <History openHistory={this.openHistory} doneInfo={doneInfo} />
-                <button class="btn btn-primary" onClick={() => this.deleteProgramFromTheList(name)}>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => this.deleteProgramFromTheList(name)}
+                >
                   Delete
                 </button>
               </div>
@@ -123,4 +133,4 @@ class ProgramInfo extends Component {
   }
 }
 
-export default ProgramInfo;
+export default isLoggedIn(ProgramInfo);

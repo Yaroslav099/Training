@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProgramsLisItemSelectWiev = props => {
+const ProgramsLisItemSelect = props => {
   const { type, index, setData, programData } = props;
   return (
     <div className="programLisItemSelectContainer" onClick={e => setData(e, index, type)}>
@@ -18,4 +18,4 @@ const ProgramsLisItemSelectWiev = props => {
   );
 };
 
-export default ProgramsLisItemSelectWiev;
+export default ProgramsLisItemSelect;

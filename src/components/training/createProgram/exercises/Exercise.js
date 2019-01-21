@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ProgramContext } from '../Program';
+import { ProgramContext } from '../program/Program';
 import NumOfAddedExercises from './NumOfAddedExercises';
 
 export default class Exercise extends Component {

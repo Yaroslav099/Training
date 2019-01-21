@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProgramsLisItemSelect from '../../../../containers/training/createProgramMenu/ProgramListItemSelect';
+import ProgramsLisItemSelect from './ProgramsListItemSelect';
 import DeleteBtn from './deleteBtn';
 
 class ProgramsListItem extends Component {

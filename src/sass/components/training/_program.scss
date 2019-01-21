@@ -1,8 +1,16 @@
 .programMainContainer {
   display : flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  min-height: 500px;
+  min-width: 300px;
+  @include respond(tab-port){
+    min-height: 400px;
+  }
+  @include respond(phone){
+    justify-content: center;
+  }
 }
 
 .exercisesContainer {

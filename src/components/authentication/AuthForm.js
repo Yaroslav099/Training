@@ -13,10 +13,10 @@ const AuthForm = ({ history }) => {
   return (
     <div className="authFormContainer">
       <h1 className="authTitle">You need to authorize to see the information</h1>
-      <button type="button" class="btn btn-primary" onClick={goToLogInForm}>
+      <button type="button" className="btn btn-primary" onClick={goToLogInForm}>
         Sign In
       </button>
-      <button type="button" class="btn btn-warning" onClick={goToRegistrationForm}>
+      <button type="button" className="btn btn-warning" onClick={goToRegistrationForm}>
         Sign Up
       </button>
     </div>

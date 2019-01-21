@@ -7,7 +7,7 @@ const UpgradeBtn = ({ history, location }) => {
   };
 
   return (
-    <button class="btn btn-warning upgradeBtn" onClick={goToUpgradeMenu}>
+    <button className="btn btn-warning upgradeBtn" onClick={goToUpgradeMenu}>
       Upgrade
     </button>
   );

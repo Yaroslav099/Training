@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import FbServices from '../../firebase-services';
+import { GetUser } from '../../firebase-services';
+import { logOutUser, setUserAsOnline } from '../../firebase-services/auth-services';
 import Loader from '../loader';
 
-const { getUserName } = new FbServices();
+const { getUserName } = new GetUser();
+
+window.onbeforeunload = () => logOutUser(getUserName());
 
 const withAuth = Component => {
   return class extends Component {
@@ -12,15 +15,21 @@ const withAuth = Component => {
       redirect: false,
     };
 
+    _isMounted = false;
+
     getUserNameFromStorage = () => localStorage.getItem('authUser');
 
     componentDidMount() {
+      this._isMounted = true;
       const authUser = this.getUserNameFromStorage();
       if (authUser) {
         this.setState({ authUser, loading: false });
       } else {
         getUserName(authUser => {
           this.setState({ authUser, loading: false });
+          if (this._isMounted) {
+            setUserAsOnline(authUser);
+          }
         });
       }
     }
@@ -30,6 +39,10 @@ const withAuth = Component => {
       if (authUser === null && redirect === false) {
         this.setState({ redirect: true });
       }
+    }
+
+    componentWillUnmount() {
+      this._isMounted = false;
     }
 
     render() {

@@ -1,12 +1,51 @@
+
 .createProgramMenuContainer {
-  width : 95%;
-  margin-top: 8%;
+  width : 99%;
+  margin-top: 80px;
+  @include respond(tab-land) {
+    width: 90%;
+    max-width: 800px;
+  }
+  @include respond(tab-port) {
+    width: 93%;
+    max-width: 800px;
+  }
+  @include respond(phone) {
+    width: 95%;
+  }
+  & input {
+    width: 100%;
+    margin: 0 auto;
+    @include respond(tab-land){
+      width: 100%;
+    }
+  }
+  & ul {
+    width : 100%;
+    display : flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   & ul li {
+    width: 24.5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap : wrap;
     margin-top: 10px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border-radius: 3px;
+    @include respond(tab-land) {
+      width: 32%;
+    }
+    @include respond(tab-port) {
+      width: 49%;
+    }
+    @include respond(phone) {
+      width: 100%;
+    }
   }
   & ul:last-child {
     margin-bottom: 50px;
@@ -19,9 +58,19 @@
   }
 
 .saveProgramBtn {
-  position: fixed;
   height:50px;
-  bottom:0;
-  left:0;
+  margin-top: 50px;
   width:100%;
+  min-width: 300px;
+  z-index: 500000;
+  @include respond(tab-port) {
+    position: fixed;
+    width: 93.2%;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  @include respond(phone) {
+    width: 95.2%;
+  }
 }

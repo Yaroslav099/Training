@@ -1,57 +1,16 @@
 import React, { Component } from 'react';
 import Exercise from './Exercise';
+import namesOfExercises from './listOfExercises';
 
 export default class Exercises extends Component {
-  namesOfExercises = [
-    'Підтягування на турніку',
-    'Підтягування на турніку (біцепс)',
-    'Підтягування на турніку широким хватом',
-    'Підтягування на турніку на 1 руці',
-    'Підтягування на 1 руці з резиною',
-    'Підтягування з резиною',
-    'Взривні підтягування (пів-виходи)',
-    'Вихід на 2',
-    'Вихід на 2 з резиною',
-    'Віджимання на брусах',
-    'Взривні віджимання на брусах',
-    'Повільні віджимання на брусах',
-    'Франц. жим на драбинці',
-    'Віджимання на кольцах',
-    'Виходи на кольцах',
-    'Негативи на кольцах',
-    'Віджиманя від землі (сер)',
-    'Віджимання від землі (шир)',
-    'Віджимання від землі (вуз)',
-    'Віджимання від землі під кутом',
-    'Віджимання від землі з хлопком',
-    'Стойка на руках',
-    'Виходи в стойку на руках',
-    'Стойка на 1 руці',
-    'Віджимання в стойці на руках',
-    'Віджимання в стойці на руках (стінка)',
-    'Вихід в спічаг',
-    'Вихід в стойку на руках на брусах',
-    'Прес підйоми ніг до перекладини',
-    'Планка',
-    'Бокова планка',
-    'Присідання',
-    'Випади',
-    'Присідання на 1 нозі',
-    'Підйоми гантелі на біцепс',
-    'Розгинання рук з-за голови',
-    'Жим гантелей стоячи',
-    'Розведення рук з гантелями стоячи',
-    'Гіперекстензія',
-  ];
-
   render() {
     const { programData } = this.props;
     return (
       <React.Fragment>
-        <label for="showExercisesCheckbox" id="showExercisesLabel" />
+        <label htmlFor="showExercisesCheckbox" id="showExercisesLabel" />
         <input id="showExercisesCheckbox" type="checkbox" />
         <div className="exercisesContainer">
-          {this.namesOfExercises.map((name, index) => (
+          {namesOfExercises.map((name, index) => (
             <Exercise name={name} key={index} programData={programData} />
           ))}
         </div>

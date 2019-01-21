@@ -1,11 +1,13 @@
 .programList {
   width: 95%;
   margin: 0 auto;
+  margin-top: 50px;
 }
 
 .program {
   background: linear-gradient(#41295a, #2F0743);
   color:white;
+  cursor: pointer;
 }
 
 .programList-item {

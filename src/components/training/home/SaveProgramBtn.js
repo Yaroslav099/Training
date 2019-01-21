@@ -1,20 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class SaveProgramBtn extends Component {
-  saveProgram = () => {
-    const { programName, getProgramDataFromHomePage, saveProgram } = this.props;
+const SaveProgramBtn = props => {
+  const saveProgram = () => {
+    const { programName, getProgramDataFromHomePage, saveProgram } = props;
     getProgramDataFromHomePage(programName, programData => {
       saveProgram(programData, programName);
     });
   };
-  render() {
-    console.log(this.props.programName);
-    return (
-      <button class="btn btn-success" onClick={this.saveProgram}>
-        Save
-      </button>
-    );
-  }
-}
+  return (
+    <button className="btn btn-success" onClick={saveProgram}>
+      Save
+    </button>
+  );
+};
 
 export default SaveProgramBtn;

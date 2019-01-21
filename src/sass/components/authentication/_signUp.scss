@@ -1,6 +1,17 @@
 .signUpContainer {
   color: white;
-  width: 95%;
+  width: 50%;
+  @include respond(tab-land) {
+    width: 600px;
+  }
+  @include respond(tab-port) {
+    width: 93%;
+    max-width: 600px;
+  }
+  @include respond(phone) {
+    width: 95%;
+  }
+
   @include absCenter;
   & button {
     margin-left: 50%;
